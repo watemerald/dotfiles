@@ -1,0 +1,55 @@
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
+
+#### FIG ENV VARIABLES ####
+
+export ZSH="$HOME/.sheldon/repos/github.com/ohmyzsh/ohmyzsh"
+
+eval "$(sheldon source)"
+
+# Go
+export PATH=$PATH:/usr/local/go/bin
+
+# editing .zshrc
+alias sz="source ~/.zshrc"
+alias ez="code ~/.zshrc"
+
+# Docker 
+alias dcud="docker-compose up -d"
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
+
+# Node
+eval "$(fnm env)"
+
+## Deno
+export DENO_INSTALL="/Users/andriisherman/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Python
+export PATH="$HOME/.poetry/bin:$PATH"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
+# Misc
+alias cat="bat"
+alias ls="exa"
+alias l="exa -lahF"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+eval "$(zoxide init zsh --cmd cd)"
+
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
+
+# Created by `pipx` on 2021-12-28 01:25:25
+export PATH="$PATH:$HOME/.local/bin"
+
+# Starship prompt
+eval "$(starship init zsh)"
