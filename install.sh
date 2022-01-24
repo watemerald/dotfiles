@@ -35,7 +35,7 @@ setup_dependencies() {
     # Run apt update
     if command_exists apt; then
         printf -- "Updating apt cache...\n"
-        sudo apt update
+        DEBIAN_FRONTEND=noninteractive sudo apt update
     fi
 
     # Install chezmoi
@@ -56,7 +56,7 @@ setup_dependencies() {
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install zsh
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            sudo apt install zsh
+            DEBIAN_FRONTEND=noninteractive sudo apt install zsh
         fi
     else
         printf -- "\m%sZsh exists, skipping...%s\n" "$YELLOW" "$RESET"
@@ -89,7 +89,7 @@ setup_dependencies() {
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install exa
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            sudo apt install exa
+            DEBIAN_FRONTEND=noninteractive sudo apt install exa
         fi
     else
         printf -- "\m%sExa exists, skipping...%s\n" "$YELLOW" "$RESET"
@@ -101,7 +101,7 @@ setup_dependencies() {
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install bat
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            sudo apt install bat
+            DEBIAN_FRONTEND=noninteractive sudo apt install bat
         fi
     else
         printf -- "\m%sBat exists, skipping...%s\n" "$YELLOW" "$RESET"
