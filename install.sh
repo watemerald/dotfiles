@@ -20,8 +20,7 @@ setup_dependencies() {
         apt-get install --no-install-recommends -y \
         ca-certificates curl file \
         build-essential \
-        autoconf automake autotools-dev libtool xutils-dev && \
-        rm -rf /var/lib/apt/lists/*
+        autoconf automake autotools-dev libtool xutils-dev
     fi
 
     # Install chezmoi
