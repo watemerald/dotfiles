@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+DEBIAN_FRONTEND=noninteractive sudo apt install -y exa bat
+{{ else if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+brew install exa bat
+{{ end -}}

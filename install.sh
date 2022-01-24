@@ -35,7 +35,12 @@ setup_dependencies() {
     # Run apt update
     if command_exists apt; then
         printf -- "Updating apt cache...\n"
-        DEBIAN_FRONTEND=noninteractive sudo apt update
+        apt-get update && \
+        apt-get install --no-install-recommends -y \
+        ca-certificates curl file \
+        build-essential \
+        autoconf automake autotools-dev libtool xutils-dev && \
+        rm -rf /var/lib/apt/lists/*
     fi
 
     # Install chezmoi
@@ -81,31 +86,6 @@ setup_dependencies() {
             | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
     else
         printf -- "\m%sSheldon exists, skipping...%s\n" "$YELLOW" "$RESET"
-    fi
-
-    # Install exa
-    if ! [ -x "$(command -v exa)" ]; then
-        printf -- "\n%sInstalling exa:%s\n\n" "$BOLD" "$RESET"
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            brew install exa
-        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            DEBIAN_FRONTEND=noninteractive sudo apt install exa
-        fi
-    else
-        printf -- "\m%sExa exists, skipping...%s\n" "$YELLOW" "$RESET"
-    fi
-
-    # Install bat
-    if ! [ -x "$(command -v bat)" ]; then
-        printf -- "\n%sInstalling bat:%s\n\n" "$BOLD" "$RESET"
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            brew install bat
-        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            # DEBIAN_FRONTEND=noninteractive sudo apt install bat
-            true
-        fi
-    else
-        printf -- "\m%sBat exists, skipping...%s\n" "$YELLOW" "$RESET"
     fi
 }
 
