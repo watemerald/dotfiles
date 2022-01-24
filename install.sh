@@ -68,6 +68,30 @@ setup_dependencies() {
     else
         printf -- "\nSheldon exists, skipping...\n"  
     fi
+
+    # Install exa
+    if ! [ -x "$(command -v exa)" ]; then
+        printf -- "\nInstalling exa:\n\n"  
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            brew install exa
+        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            DEBIAN_FRONTEND=noninteractive sudo apt install -y exa
+        fi
+    else
+        printf -- "\mExa exists, skipping...\n"  
+    fi
+
+    # Install bat
+    if ! [ -x "$(command -v bat)" ]; then
+        printf -- "\nInstalling bat:\n\n"  
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            brew install bat
+        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            DEBIAN_FRONTEND=noninteractive sudo apt install -y bat
+        fi
+    else
+        printf -- "\mBat exists, skipping...\n"  
+    fi
 }
 
 finalize_dotfiles() {
