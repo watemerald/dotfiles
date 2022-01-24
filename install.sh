@@ -7,30 +7,11 @@ command_exists() {
 }
 
 error() {
-    printf -- "%sError: $*%s\n" >&2 "$RED" "$RESET"
-}
-
-setup_color() {
-    # Only use colors if connected to a terminal
-    if [ -t 1 ]; then
-        RED=$(printf '\033[31m')
-        GREEN=$(printf '\033[32m')
-        YELLOW=$(printf '\033[33m')
-        BLUE=$(printf '\033[34m')
-        BOLD=$(printf '\033[1m')
-        RESET=$(printf '\033[m')
-    else
-        RED=""
-        GREEN=""
-        YELLOW=""
-        BLUE=""
-        BOLD=""
-        RESET=""
-    fi
+    printf -- "Error: $*%s\n" >&2  
 }
 
 setup_dependencies() {
-    printf -- "\n%sSetting up dependencies:%s\n\n" "$BOLD" "$RESET"
+    printf -- "\nSetting up dependencies:\n\n"  
 
     # Run apt update
     if command_exists apt; then
@@ -45,65 +26,64 @@ setup_dependencies() {
 
     # Install chezmoi
     if ! [ -x "$(command -v chezmoi)" ]; then
-        printf -- "\n%sInstalling chezmoi:%s\n\n" "$BOLD" "$RESET"
+        printf -- "\nInstalling chezmoi:\n\n"  
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install chezmoi
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
             curl -sfL https://git.io/chezmoi | sh
         fi
     else
-        printf -- "\m%sChezmoi exists, skipping...%s\n" "$YELLOW" "$RESET"
+        printf -- "\mChezmoi exists, skipping...\n"  
     fi
 
     # Install zsh
     if ! [ -x "$(command -v zsh)" ]; then
-        printf -- "\n%sInstalling zsh:%s\n\n" "$BOLD" "$RESET"
+        printf -- "\nInstalling zsh:\n\n"  
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install zsh
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            DEBIAN_FRONTEND=noninteractive sudo apt install zsh
+            DEBIAN_FRONTEND=noninteractive sudo apt install -y fonts-powerline zsh
         fi
     else
-        printf -- "\m%sZsh exists, skipping...%s\n" "$YELLOW" "$RESET"
+        printf -- "\mZsh exists, skipping...\n"  
     fi
 
     # Set zsh as default shell
     if ! [ "$SHELL" = "/bin/zsh" ]; then
-        printf -- "\n%sSetting zsh as default shell:%s\n\n" "$BOLD" "$RESET"
+        printf -- "\nSetting zsh as default shell:\n\n"  
         if [[ "$OSTYPE" == "darwin"* ]]; then
             chsh -s /bin/zsh
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            sudo chsh -s /bin/zsh
+            sudo chsh -s /usr/bin/zsh "$(whoami)"
         fi
     else
-        printf -- "\m%sZsh is already the default shell, skipping...%s\n" "$YELLOW" "$RESET"
+        printf -- "\nZsh is already the default shell, skipping...\n"  
     fi
 
     # Install sheldon
     if ! [ -x "$(command -v sheldon)" ]; then
-        printf -- "\n%sInstalling sheldon:%s\n\n" "$BOLD" "$RESET"
+        printf -- "\nInstalling sheldon:\n\n"  
         curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
             | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
     else
-        printf -- "\m%sSheldon exists, skipping...%s\n" "$YELLOW" "$RESET"
+        printf -- "\nSheldon exists, skipping...\n"  
     fi
 }
 
 finalize_dotfiles() {
-    printf -- "\n%sFinalizing dotfiles:%s\n\n" "$BOLD" "$RESET"
+    printf -- "\nFinalizing dotfiles:\n\n"  
 
-    printf -- "%sUpdating dotfiles at destination...%s\n" "$BLUE" "$RESET"
+    printf -- "Updating dotfiles at destination...\n"
         ./bin/chezmoi -v init --apply watemerald
 }
 
 main() {
-    printf -- "\n%sDotfiles setup script%s\n" "$BOLD" "$RESET"
+    printf -- "\nDotfiles setup script\n"  
 
-    setup_color
     setup_dependencies
     finalize_dotfiles
 
-    printf -- "\n%sDone.%s\n\n" "$GREEN" "$RESET"
+    printf -- "\nDone.\n\n"
 
     # if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
     #    [ -s "$HOME/.zshrc" ] && \. "$HOME/.zshrc"
