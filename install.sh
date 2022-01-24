@@ -83,7 +83,7 @@ finalize_dotfiles() {
     printf -- "\n%sFinalizing dotfiles:%s\n\n" "$BOLD" "$RESET"
 
     printf -- "%sUpdating dotfiles at destination...%s\n" "$BLUE" "$RESET"
-    chezmoi apply
+        ./bin/chezmoi -v init --apply watemerald
 }
 
 main() {
