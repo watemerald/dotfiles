@@ -101,7 +101,8 @@ setup_dependencies() {
         if [[ "$OSTYPE" == "darwin"* ]]; then
             brew install bat
         elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            DEBIAN_FRONTEND=noninteractive sudo apt install bat
+            # DEBIAN_FRONTEND=noninteractive sudo apt install bat
+            true
         fi
     else
         printf -- "\m%sBat exists, skipping...%s\n" "$YELLOW" "$RESET"
