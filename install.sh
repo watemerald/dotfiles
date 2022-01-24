@@ -16,8 +16,8 @@ setup_dependencies() {
     # Run apt update
     if command_exists apt; then
         printf -- "Updating apt cache...\n"
-        apt-get update && \
-        apt-get install --no-install-recommends -y \
+        sudo apt-get update && \
+        sudo apt-get install --no-install-recommends -y \
         ca-certificates curl file \
         build-essential \
         autoconf automake autotools-dev libtool xutils-dev
