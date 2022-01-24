@@ -32,6 +32,11 @@ setup_color() {
 setup_dependencies() {
     printf -- "\n%sSetting up dependencies:%s\n\n" "$BOLD" "$RESET"
 
+    # Run apt update
+    if command_exists apt; then
+        printf -- "Updating apt cache...\n"
+        sudo apt update
+    fi
 
     # Install chezmoi
     if ! [ -x "$(command -v chezmoi)" ]; then
